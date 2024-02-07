@@ -2,9 +2,10 @@
 //! implement those traits in interesting ways. You need to remove all of the `todo!()`s. Most of
 //! them will need to be replaced by some code, but some may simply be deleted.
 
-// NOTE: You will need to `use` something from the standard library to implement `Ord` and
-// `PartialOrd` here.
-
+// NOTE: You will need to use something from the standard library to implement Ord and
+// PartialOrd here.
+use std::cmp::{Eq, Ord, Ordering, PartialEq, PartialOrd};
+use std::convert::TryFrom;
 /// A record of an employee at a particular company
 #[derive(Debug)]
 pub struct Employee {
@@ -18,29 +19,32 @@ pub struct Employee {
 	pub uid: u32,
 }
 
-// We want to consider two employee instances equal iff they have the same `uid`.
+// We want to consider two employee instances equal iff they have the same uid.
 
 impl PartialEq for Employee {
 	fn eq(&self, other: &Self) -> bool {
-		todo!("complete the implementation");
+		self.uid == other.uid
 	}
 }
 impl Eq for Employee {}
 
 // We want to sort employees. First and foremost, employees are equal if they have the same
-// `uid`, as explained above. For employees who are not equal, we sort by the value they
+// uid, as explained above. For employees who are not equal, we sort by the value they
 // bring to the company. Value is defined as the quotient of the experience they've acquired
 // at the company divided by their wage. Use integer division for the purpose of this calculation.
 
 impl PartialOrd for Employee {
 	fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-		todo!("complete the implementation");
+		Some(self.cmp(other))
 	}
 }
 
 impl Ord for Employee {
 	fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-		todo!("complete the implementation");
+		match self.uid.cmp(&other.uid) {
+			Ordering::Equal => self.name.cmp(&other.name),
+			other => other,
+		}
 	}
 }
 
@@ -52,21 +56,45 @@ impl Ord for Employee {
 // * "Jose, 12, 6, 1" - Jose has been working here for 1 year (12 months) and earns 6
 // tokens per hour. He is employee #1
 //
-// Any strings with the wrong number of commas or numbers too big for `u32` should return `Err(_)`
+// Any strings with the wrong number of commas or numbers too big for u32 should return Err(_)
 // where the error message may be anything.
 
 impl TryFrom<String> for Employee {
 	type Error = &'static str;
 
 	fn try_from(value: String) -> Result<Self, Self::Error> {
-		todo!("complete the implementation");
+		// Split the input string by commas
+		let parts: Vec<&str> = value.split(',').collect();
+
+		// Check if there are exactly 4 parts
+		if parts.len() != 4 {
+			return Err("Invalid input format");
+		}
+
+		// Parse each part into the corresponding fields
+		let name = parts[0].trim().to_string();
+		let experience = parts[1]
+			.trim()
+			.parse::<u32>()
+			.map_err(|_| "Invalid experience")?;
+		let wage = parts[2].trim().parse::<u32>().map_err(|_| "Invalid wage")?;
+		let uid = parts[3].trim().parse::<u32>().map_err(|_| "Invalid uid")?;
+
+		// Create and return the Employee instance
+		Ok(Employee {
+			name,
+			experience,
+			wage,
+			uid,
+		})
 	}
 }
 
 // We also want to convert employees back into strings in the same format as above.
 impl From<Employee> for String {
 	fn from(e: Employee) -> Self {
-		todo!("complete the implementation");
+		// Create a formatted string using the Employee fields
+		format!("{}, {}, {}, {}", e.name, e.experience, e.wage, e.uid)
 	}
 }
 
@@ -74,13 +102,13 @@ impl From<Employee> for String {
 /// On a scale from 0 - 255, with zero being extremely easy and 255 being extremely hard,
 /// how hard did you find this section of the exam.
 pub fn how_hard_was_this_section() -> u8 {
-	todo!()
+	99
 }
 
 /// This function is not graded. It is just for collecting feedback.
 /// How much time (in hours) did you spend on this section of the exam?
 pub fn how_many_hours_did_you_spend_on_this_section() -> u8 {
-	todo!()
+	1 / 2
 }
 
 #[cfg(test)]
