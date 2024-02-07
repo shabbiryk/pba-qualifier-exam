@@ -1,4 +1,4 @@
-//! This portion of the exam represents an honor code. By returning `true` from each of these
+//! This portion of the exam represents an honor code. By returning true from each of these
 //! functions you are attesting that you have followed the various rules of the exam.
 //!
 //! Cheating on this exam will only hurt yourself as you are likely to feel lost and frustrated at
@@ -11,15 +11,15 @@
 /// solutions while you are completing it is considered cheating. You are encouraged to ask the
 /// Academy staff if something is unclear or you are completely stuck.
 pub fn exam_done_independently() -> bool {
-	// If you have followed this rule, return `true`
-	todo!()
+	// If you have followed this rule, return true
+	return true;
 }
 
 /// The multiple choice portion of the exam must be completed without accessing the internet,
 /// books, or any other resources.
 pub fn multiple_choice_closed_book() -> bool {
-	// If you have followed this rule, return `true`
-	todo!()
+	// If you have followed this rule, return true
+	return true;
 }
 
 /// The multiple choice portion of this exam has several questions asking for the output of a
@@ -29,12 +29,12 @@ pub fn multiple_choice_closed_book() -> bool {
 /// paper. Pretend that this portion of the exam is being administered on paper, and no computer is
 /// available at all.
 pub fn multiple_choice_no_run() -> bool {
-	// If you have followed this rule, return `true`
-	todo!()
+	// If you have followed this rule, return true
+	return true;
 }
 
 /// The coding portion of the exam allows access to books, and websites such as the Rust book, the
-/// standard library reference, and others _explicitly listed_ in the exam prompts themselves.
+/// standard library reference, and others explicitly listed in the exam prompts themselves.
 /// However, you not allowed to look up direct implementation of the specific algorithms we are
 /// asking you to write.
 ///
@@ -50,21 +50,21 @@ pub fn multiple_choice_no_run() -> bool {
 /// If you are in any doubt of something being allowed or disallowed not, please directly ask the
 /// Academy staff for clarification and guidance.
 pub fn coding_no_copy() -> bool {
-	// If you have followed this rule, return `true`
-	todo!()
+	// If you have followed this rule, return true
+	return true;
 }
 
-/// You not allowed to use external dependencies from `crates.io` or elsewhere unless
+/// You not allowed to use external dependencies from crates.io or elsewhere unless
 /// explicitly stated in the problem.
 pub fn coding_no_external_deps() -> bool {
-	// If you have followed this rule, return `true`
-	todo!()
+	// If you have followed this rule, return true
+	return true;
 }
 
 /// You are not allowed to use AI assisted coding tools like Github Copilot to complete this exam.
 pub fn coding_no_ai_helpers() -> bool {
-	// If you have followed this rule, return `true`
-	todo!()
+	// If you have followed this rule, return true
+	return true;
 }
 
 #[cfg(test)]

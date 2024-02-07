@@ -1,40 +1,56 @@
-//! Complete the following functions using the pattern matching syntax. That includes the `match`
-//! statement of the `matches!()` macro, if you feel like having an "1-liner".
+//! Complete the following functions using the pattern matching syntax. That includes the match
+//! statement of the matches!() macro, if you feel like having an "1-liner".
 //!
 //! You can try and write them imperatively at first as well, but at the end of the day, we want you
-//! to write them using the `match` keyword or the `matches!` macro.
+//! to write them using the match keyword or the matches! macro.
 
-/// Returns true if the last two strings in the vector start with `PBA`.
+/// Returns true if the last two strings in the vector start with PBA.
 pub fn match_1(input: Vec<String>) -> bool {
-	todo!();
+	if input.len() >= 2 {
+		let last_string = &input[input.len() - 1];
+		let second_last_string = &input[input.len() - 2];
+
+		last_string.starts_with("PBA") && second_last_string.starts_with("PBA")
+	} else {
+		false
+	}
 }
 
-/// Returns true if the first and last string in the vector start with `PBA`.
+/// Returns true if the first and last string in the vector start with PBA.
 pub fn match_2(input: Vec<String>) -> bool {
-	todo!();
+	if let Some(first_string) = input.first() {
+		if let Some(last_string) = input.last() {
+			return first_string.starts_with("PBA") && last_string.starts_with("PBA");
+		}
+	}
+
+	false
 }
 
-/// Returns true if the first item in `input` is true.
+/// Returns true if the first item in input is true.
 pub fn match_3(input: (bool, bool, bool)) -> bool {
-	todo!();
+	input.0
 }
 
-/// Returns true if the input is `Ok(x)` of some even `x`.
+/// Returns true if the input is Ok(x) of some even x.
 pub fn match_4(input: Result<u32, &'static str>) -> bool {
-	todo!();
+	match input {
+		Ok(x) => x % 2 == 0,
+		Err(_) => false,
+	}
 }
 
 /// This function is not graded. It is just for collecting feedback.
 /// On a scale from 0 - 255, with zero being extremely easy and 255 being extremely hard,
 /// how hard did you find this section of the exam.
 pub fn how_hard_was_this_section() -> u8 {
-	todo!()
+	4
 }
 
 /// This function is not graded. It is just for collecting feedback.
 /// How much time (in hours) did you spend on this section of the exam?
 pub fn how_many_hours_did_you_spend_on_this_section() -> u8 {
-	todo!()
+	1 / 2
 }
 
 #[cfg(test)]
