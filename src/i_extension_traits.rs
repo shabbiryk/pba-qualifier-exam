@@ -7,8 +7,8 @@ pub enum Outcome {
 	IDontKnow,
 }
 
-// A function takes some arbitrary input that's a collection of `T`, and processes each item
-// individually. Each process can be an `Outcome`. We return `Vec<Outcome>`.
+// A function takes some arbitrary input that's a collection of T, and processes each item
+// individually. Each process can be an Outcome. We return Vec<Outcome>.
 
 pub fn process_stuff<T>(input: impl Iterator<Item = T>) -> Vec<Outcome> {
 	unimplemented!("You are not expected to implement this function");
@@ -18,22 +18,23 @@ pub fn process_stuff<T>(input: impl Iterator<Item = T>) -> Vec<Outcome> {
 // determine how many were okay, how many were error, etc.
 //
 // A boring solution follows 🫣:
+// Implement the trait for Vec<Outcome>
 
 pub fn ok_count(outcomes: Vec<Outcome>) -> usize {
-	todo!();
+	outcomes.iter().filter(|&outcome| matches!(outcome, Outcome::Ok)).count()
 }
 pub fn something_went_wrong_count(outcomes: Vec<Outcome>) -> usize {
-	todo!();
+	outcomes.iter().filter(|&outcome| matches!(outcome, Outcome::SomethingWentWrong)).count()
 }
 pub fn i_dont_know_count(outcomes: Vec<Outcome>) -> usize {
-	todo!();
+	outcomes.iter().filter(|&outcome| matches!(outcome, Outcome::IDontKnow)).count()
 }
 
-// This is quite lame. We want to be able to call these methods directly on the `Vec<Outcome>`. But
-// how do we do this? We can't add a function to type `Vec`. This type is part of the standard
+// This is quite lame. We want to be able to call these methods directly on the Vec<Outcome>. But
+// how do we do this? We can't add a function to type Vec. This type is part of the standard
 // library!
 //
-// Correct, but we can define a trait in the current module, and implement that for `Vec<_>`.
+// Correct, but we can define a trait in the current module, and implement that for Vec<_>.
 //
 // This is a very common approach, and is called an "extension trait".
 
@@ -47,23 +48,25 @@ pub trait OutcomeCount {
 
 impl OutcomeCount for Vec<Outcome> {
 	fn ok_count(&self) -> usize {
-		todo!();
-	}
-	fn i_dont_know_count(&self) -> usize {
-		todo!();
-	}
-	fn something_went_wrong_count(&self) -> usize {
-		todo!();
-	}
+        self.iter().filter(|&outcome| matches!(outcome, Outcome::Ok)).count()
+    }
+
+    fn something_went_wrong_count(&self) -> usize {
+        self.iter().filter(|&outcome| matches!(outcome, Outcome::SomethingWentWrong)).count()
+    }
+
+    fn i_dont_know_count(&self) -> usize {
+        self.iter().filter(|&outcome| matches!(outcome, Outcome::IDontKnow)).count()
+    }
 }
 
-// Now we can call these functions directly on `Vec<Outcome>`.
+// Now we can call these functions directly on Vec<Outcome>.
 
 /// This function is not graded. It is just for collecting feedback.
 /// On a scale from 0 - 255, with zero being extremely easy and 255 being extremely hard,
 /// how hard did you find this section of the exam.
 pub fn how_hard_was_this_section() -> u8 {
-	todo!()
+	50
 }
 
 /// This function is not graded. It is just for collecting feedback.

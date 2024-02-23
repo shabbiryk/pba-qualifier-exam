@@ -11,19 +11,17 @@
 /// This function takes an iterator of u32 values, squares each value, and returns the sum of the
 /// squares. You may assume that no individual square, nor the entire sum, overflows the u32 type.
 pub fn sum_of_squares(vals: impl Iterator<Item = u32>) -> u32 {
-	todo!()
+	vals.map(|x| x * x).sum()
 }
 
 /// This function takes an iterator of i32 values, calculates the absolute value of each, and throws
 /// away any values that are greater than 100. The remaining positive values are returned as an
 /// iterator of u32s.
 pub fn bounded_absolute_values(vals: impl Iterator<Item = i32>) -> impl Iterator<Item = u32> {
-	// You should remove the following line (and this comment). It is just there because the
-	// compiler doesn't allow todo!() when the return type is impl Trait
-	Vec::new().into_iter()
+	vals.filter(|&x| x.abs() <= 100).map(|x| x.abs() as u32)
 }
 
-// We allow `unused_mut` only so that there is no build warning on the starter code.
+// We allow unused_mut only so that there is no build warning on the starter code.
 // You should remove this line once you have completed the following function
 
 /// This function takes an iterator of u32 values. The first value in the iterator, call it n, is
@@ -34,19 +32,30 @@ pub fn bounded_absolute_values(vals: impl Iterator<Item = i32>) -> impl Iterator
 /// If there are fewer than n even values left in the input, return as many as possible
 #[allow(unused_mut)]
 pub fn first_n_even(mut vals: impl Iterator<Item = u32>) -> Option<impl Iterator<Item = u32>> {
-	// You should remove the following line (and this comment). It is just there because the
-	// compiler doesn't allow todo!() when the return type is impl Trait
-	Some(Vec::new().into_iter())
+	 // Check if the iterator is empty
+	 if let Some(n) = vals.next() {
+        // Create an iterator that filters even numbers from the remainder of the input iterator
+        let even_values = vals.filter(|&x| x % 2 == 0);
+
+        // Take the first n even values
+        let first_n_even_values = even_values.take(n as usize);
+
+        Some(first_n_even_values)
+    } else {
+        // Return None if the input iterator is empty
+        None
+    }
 }
+
+
 
 /// Return an "infinite" iterator that yields the squares of the whole numbers.
 /// For example, the first few values should be 0, 1, 4, 9, 16, 25, ...
 ///
 /// The iterator should be bounded only by the u32 type, not by your code
 pub fn square_whole_numbers() -> impl Iterator<Item = u32> {
-	// You should remove the following line (and this comment). It is just there because the
-	// compiler doesn't allow todo!() when the return type is impl Trait
-	Vec::new().into_iter()
+	std::iter::successors(Some(0), |&x| Some(x + 1))
+	.map(|x| x * x)
 }
 
 /// An iterator that generates the Fibonacci sequence.
@@ -61,22 +70,41 @@ pub struct Fibonacci {
 impl Iterator for Fibonacci {
 	type Item = u32;
 
-	fn next(&mut self) -> Option<u32> {
-		todo!()
-	}
+
+    fn next(&mut self) -> Option<u32> {
+		match (self.prev, self.prev_prev) {
+            (None, None) => {
+                self.prev = Some(0);
+                self.prev_prev = Some(1);
+                Some(0)
+            }
+            (Some(curr), None) => {
+                self.prev = self.prev_prev;
+                self.prev_prev = Some(curr + self.prev_prev.unwrap());
+                self.prev
+            }
+            (Some(curr), Some(next)) => {
+                self.prev = self.prev_prev;
+                self.prev_prev = Some(curr + next);
+                self.prev
+            }
+            _ => None,
+        }
+
+    }
 }
 
 /// This function is not graded. It is just for collecting feedback.
 /// On a scale from 0 - 255, with zero being extremely easy and 255 being extremely hard,
 /// how hard did you find this section of the exam.
 pub fn how_hard_was_this_section() -> u8 {
-	todo!()
+	30
 }
 
 /// This function is not graded. It is just for collecting feedback.
 /// How much time (in hours) did you spend on this section of the exam?
 pub fn how_many_hours_did_you_spend_on_this_section() -> u8 {
-	todo!()
+	1/2
 }
 
 #[cfg(test)]
